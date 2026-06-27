@@ -1,7 +1,6 @@
 package com.project.patient;
 
-import javax.xml.crypto.Data;
-import java.sql.Date;
+import java.time.LocalDate;
 
 public class Patient {
 
@@ -9,18 +8,18 @@ public class Patient {
     private String firstName;
     private String lastName;
     private String phoneNumber;
-    private Date dateOfBirth;
+    private LocalDate dateOfBirth;
     private String reasonForVisit;
 
     public Patient(){
-
     }
 
-    public Patient(int id, String firstName, String lastName, String phoneNumber, Data dataOfBirth, String reasonForVisit){
+    public Patient(int id, String firstName, String lastName, String phoneNumber, LocalDate dataOfBirth, String reasonForVisit){
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.phoneNumber = phoneNumber;
+        this.dateOfBirth = dataOfBirth;
         this.reasonForVisit = reasonForVisit;
     }
 
@@ -56,11 +55,11 @@ public class Patient {
         this.phoneNumber = phoneNumber;
     }
 
-    public Date getDateOfBirth() {
+    public LocalDate getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(Date dateOfBirth) {
+    public void setDateOfBirth(LocalDate dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 
@@ -70,5 +69,16 @@ public class Patient {
 
     public void setReasonForVisit(String reasonForVisit) {
         this.reasonForVisit = reasonForVisit;
+    }
+
+    @Override
+    public String toString() {
+        return "Patient - " +
+                "Id:" + id +
+                ", First Name: " + firstName + '\'' +
+                ", Last Name: " + lastName + '\'' +
+                ", Phone Number: " + phoneNumber + '\'' +
+                ", Date of Birth: " + dateOfBirth +
+                ", Reason for Visit: " + reasonForVisit + '\'';
     }
 }
