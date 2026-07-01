@@ -15,7 +15,12 @@ public class PatientHistorySystem {
         return head;
     }
 
-    public void insertPatientRecord(LocalDate visitData, String diagnosis, String treatmentNotes){
+    public void insertPatientRecord(LocalDate visitDate, String diagnosis, String treatmentNotes){
+        PatientRecord newRecord = new PatientRecord(visitDate, diagnosis, treatmentNotes);
 
+        if (head == null){
+            createPatientRecord(visitDate, diagnosis, treatmentNotes);
+            return;
+        }
     }
 }
