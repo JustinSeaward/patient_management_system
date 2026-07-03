@@ -1,49 +1,61 @@
 package com.project.patient;
 
-import java.util.LinkedList;
-
 public class PatientWaitingRoom {
-    private LinkedList<Patient> queue;
+    private PatientNode head;
+    private PatientNode tail;
+    private int size;
 
-    public PatientWaitingRoom(){
-        this.queue = new LinkedList<>();
+   public PatientWaitingRoom(){
+       this.head = null;
+       this.tail = null;
+       this.size = 0;
+   }
+
+    public PatientNode getHead() {
+        return head;
     }
 
-    public LinkedList<Patient> getQueue() {
-        return queue;
+    public void setHead(PatientNode head) {
+        this.head = head;
     }
 
-    public void setQueue(LinkedList<Patient> queue) {
-        this.queue = queue;
+    public PatientNode getTail() {
+        return tail;
     }
 
-    public void addPatient(Patient patient){
-        queue.add(patient);
+    public void setTail(PatientNode tail) {
+        this.tail = tail;
     }
 
-    public Patient serveNextPatient() {
-        if(queue.isEmpty()){
-            System.out.println("The waiting room is empty.");
-            return null;
-        }
-        return queue.removeFirst();
+    public int getSize() {
+        return size;
     }
 
-    public void addEmergencyPatient(Patient patient, int location){
-        queue.add(location, patient);
-    };
-
-    public void printAllPatientsInQueue(){
-        if (queue.isEmpty()) {
-            System.out.println("The waiting room is currently empty.");
-            return;
-        }
-
-        System.out.println("Patients currently waiting...");
-        for(Patient patient : queue){
-            System.out.println(patient.toString());
-        }
+    public void setSize(int size) {
+        this.size = size;
     }
 
+    public void createWaitingRoom(Patient firstPatient){
+       PatientNode newNode = new PatientNode(firstPatient);
+        head = newNode;
+        tail = newNode;
+        size++;
+    }
 
+   public void addPatient(Patient newPatient, int location){
+       PatientNode newNode = new PatientNode(newPatient);
+
+       if(head == null){
+           createWaitingRoom(newPatient);
+           System.out.println("Waiting room created");
+           return;
+       } else if (location == 0) {
+            newNode.setNext(head);
+            head = newNode;
+       } else if (location >= size) {
+           tail.setNext(newNode);
+           tail = newNode;
+       }
+       size++;
+   }
 }
