@@ -23,30 +23,34 @@ public class UnitTest {
     }
 
     @Test
-    public void testAddPatientToQueue(){
-        waitingRoom.addPatient(patient1);
-        Assertions.assertEquals(patient1,waitingRoom.serveNextPatient());
+    public void testCreateWaitingRoom(){
+        waitingRoom.createWaitingRoom(patient1);
+
+        Assertions.assertEquals(1, waitingRoom.getSize());
+        Assertions.assertEquals(patient1, waitingRoom.getHead().getPatientInformation());
+        Assertions.assertEquals(patient1, waitingRoom.getTail().getPatientInformation());
     }
 
     @Test
-    public void testServeNextPatientInQueue(){
-        Assertions.assertNull(waitingRoom.serveNextPatient());
+    public void testAddPatientToBackOfQueue(){
+        waitingRoom.addPatient(patient1, 1);
+        waitingRoom.addPatient(patient2, 1);
 
-        waitingRoom.addPatient(patient1);
-        waitingRoom.addPatient(patient2);
-        waitingRoom.addPatient(patient3);
-
-        Assertions.assertNotNull(waitingRoom.serveNextPatient());
+        Assertions.assertEquals(2,waitingRoom.getSize());
+        Assertions.assertEquals(patient1, waitingRoom.getHead().getPatientInformation());
+        Assertions.assertEquals(patient2, waitingRoom.getTail().getPatientInformation());
     }
 
     @Test
-    public void testAddEmergencyPatientIntoFrontOfQueue(){
-        waitingRoom.addPatient(patient1);
-        waitingRoom.addPatient(patient2);
-        Assertions.assertEquals(patient1, waitingRoom.serveNextPatient());
+    public void testAddEmergencyPatient() {
+        waitingRoom.addPatient(patient1,1);
+        waitingRoom.addPatient(patient2,1);
+        waitingRoom.addPatient(patient3,0);
 
-        waitingRoom.addEmergencyPatient(patient3,0);
-
-        Assertions.assertEquals(patient3, waitingRoom.serveNextPatient());
+        Assertions.assertNotEquals(patient1, waitingRoom.getHead().getPatientInformation());
+        Assertions.assertEquals(patient3, waitingRoom.getHead().getPatientInformation());
+        Assertions.assertEquals(3,waitingRoom.getSize());
+        Assertions.assertEquals(patient2,waitingRoom.getTail().getPatientInformation());
     }
+
 }
