@@ -58,4 +58,28 @@ public class PatientWaitingRoom {
        }
        size++;
    }
+
+    public void serveNextPatientInLine(){
+        if(head == null){
+            System.out.println("Waiting room is empty");
+            return;
+        }
+        head = head.getNext();
+        size--;
+    }
+
+    public void printPatientWaitingRoomList(){
+       if(head == null){
+           System.out.println("Waiting room is empty");
+           return;
+       }
+       PatientNode tempNode = head;
+       int numberOfPatientInWaitingRoom = 0;
+       for(int i = 0; i < size; i++){
+           System.out.println(tempNode.getPatientInformation().toString());
+           tempNode = tempNode.getNext();
+           numberOfPatientInWaitingRoom++;
+       }
+        System.out.println(numberOfPatientInWaitingRoom + " of patient(s) waiting.");
+    }
 }
