@@ -44,4 +44,28 @@ public class PatientRecord {
     public void setValue(int value) {
         this.value = value;
     }
+
+    public LocalDate getVisitDate() {
+        return visitDate;
+    }
+
+    public void setVisitDate(LocalDate visitDate) {
+        this.visitDate = visitDate;
+    }
+
+    public String getDiagnosis() {
+        return diagnosis;
+    }
+
+    public void setDiagnosis(String diagnosis) {
+        this.diagnosis = diagnosis;
+    }
+
+    public String getTreatmentNotes() {
+        return treatmentNotes;
+    }
+
+    public void setTreatmentNotes(String treatmentNotes) {
+        this.treatmentNotes = treatmentNotes;
+    }
 }
