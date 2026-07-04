@@ -53,4 +53,17 @@ public class UnitTest {
         Assertions.assertEquals(patient2,waitingRoom.getTail().getPatientInformation());
     }
 
+    @Test
+    public void testServingNextPatientInLine(){
+        waitingRoom.addPatient(patient1, 1);
+        waitingRoom.addPatient(patient2, 1);
+        waitingRoom.addPatient(patient3, 1);
+
+        Assertions.assertEquals(3,waitingRoom.getSize());
+        waitingRoom.serveNextPatientInLine();
+        Assertions.assertEquals(2,waitingRoom.getSize());
+        Assertions.assertEquals(patient2,waitingRoom.getHead().getPatientInformation());
+    }
+
+
 }
