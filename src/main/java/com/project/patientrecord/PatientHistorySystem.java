@@ -8,6 +8,10 @@ public class PatientHistorySystem {
     private PatientRecord currentView;
     private int size;
 
+    public PatientRecord getCurrentView() {
+        return currentView;
+    }
+
     public PatientRecord createPatientRecord(LocalDate visitData, String diagnosis, String treatmentNotes){
         PatientRecord patientRecord = new PatientRecord(visitData, diagnosis, treatmentNotes);
         head = patientRecord;
@@ -50,7 +54,7 @@ public class PatientHistorySystem {
         System.out.println(currentView.getTreatmentNotes());
     }
 
-    public void moveToNextRecord() {
+    public void moveToNextPatientRecord() {
         if(tail == currentView){
             System.out.println("You have reached newest patient record");
             return;
