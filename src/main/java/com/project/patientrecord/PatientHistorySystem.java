@@ -12,12 +12,15 @@ public class PatientHistorySystem {
         return currentView;
     }
 
-    public PatientRecord createPatientRecord(LocalDate visitData, String diagnosis, String treatmentNotes){
+    public PatientHistorySystem(){
+    }
+
+    public void createPatientRecord(LocalDate visitData, String diagnosis, String treatmentNotes){
         PatientRecord patientRecord = new PatientRecord(visitData, diagnosis, treatmentNotes);
         head = patientRecord;
         tail = patientRecord;
         size = 1;
-        return head;
+        return;
     }
 
     public void insertPatientRecord(LocalDate visitDate, String diagnosis, String treatmentNotes){
