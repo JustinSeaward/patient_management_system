@@ -47,11 +47,12 @@ public class PatientWaitingRoom {
 
        if(head == null){
            createWaitingRoom(newPatient);
-           System.out.println("Waiting room created");
+           System.out.println("\nPatient added to waiting room");
            return;
        } else if (location == 0) {
             newNode.setNext(head);
             head = newNode;
+           System.out.println("Patient added to waiting room");
        } else if (location >= size) {
            tail.setNext(newNode);
            tail = newNode;
@@ -59,27 +60,27 @@ public class PatientWaitingRoom {
        size++;
    }
 
-    public void serveNextPatientInLine(){
+    public Patient serveNextPatientInLine(){
         if(head == null){
             System.out.println("Waiting room is empty");
-            return;
+            return null;
         }
+        Patient nextPatientToServe = head.getPatientInformation();
         head = head.getNext();
         size--;
+        return nextPatientToServe;
     }
 
-    public void printPatientWaitingRoomList(){
+    public void displayPatientWaitingRoomList(){
        if(head == null){
            System.out.println("Waiting room is empty");
            return;
        }
        PatientNode tempNode = head;
-       int numberOfPatientInWaitingRoom = 0;
        for(int i = 0; i < size; i++){
            System.out.println(tempNode.getPatientInformation().toString());
            tempNode = tempNode.getNext();
-           numberOfPatientInWaitingRoom++;
        }
-        System.out.println(numberOfPatientInWaitingRoom + " of patient(s) waiting.");
+        System.out.println(size + " patient(s) waiting.");
     }
 }
