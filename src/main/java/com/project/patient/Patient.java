@@ -1,5 +1,7 @@
 package com.project.patient;
 
+import com.project.patientrecord.PatientHistorySystem;
+
 import java.time.LocalDate;
 
 public class Patient {
@@ -10,6 +12,7 @@ public class Patient {
     private String phoneNumber;
     private LocalDate dateOfBirth;
     private String reasonForVisit;
+    private PatientHistorySystem patientRecordFolder = new PatientHistorySystem();
 
     public Patient(){
     }
@@ -71,6 +74,10 @@ public class Patient {
         this.reasonForVisit = reasonForVisit;
     }
 
+    public PatientHistorySystem getPatientRecordFolder() {
+        return patientRecordFolder;
+    }
+
     @Override
     public String toString() {
         return "\nPatient - " +
@@ -79,6 +86,6 @@ public class Patient {
                 "Last Name: " + lastName + "\n" +
                 "Phone Number: " + phoneNumber + "\n" +
                 "Date of Birth: " + dateOfBirth + "\n" +
-                "Reason for Visit: " + reasonForVisit;
+                "Reason for Visit: " + reasonForVisit + "\n";
     }
 }
