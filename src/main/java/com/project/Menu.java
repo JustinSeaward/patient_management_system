@@ -2,23 +2,24 @@ package com.project;
 
 import com.project.patient.Patient;
 import com.project.patient.PatientWaitingRoom;
-import com.project.patientrecord.PatientHistorySystem;
 import java.time.LocalDate;
 import java.util.Scanner;
 
 public class Menu {
     private static PatientWaitingRoom waitingRoom = new PatientWaitingRoom();
-    private static PatientHistorySystem historySystem = new PatientHistorySystem();
+    private static Patient currentPatient;
     private static Scanner userInput = new Scanner(System.in);
 
     public static void main(String[] args) {
 
+        Patient testPatient = new Patient(1, "rusty", "shakleford", "7091231234", LocalDate.of(1969,10,10), "flu");
         for (int i = 1; i <= 10; i++){
             LocalDate dummyDate = LocalDate.now().minusDays(i);
             String dummyDiagnosis = "Checkup " + i;
             String dummyTreatment = "Standard care " + i;
-            historySystem.insertPatientRecord(dummyDate,dummyDiagnosis, dummyTreatment);
+            testPatient.getPatientRecordFolder().insertPatientRecord(dummyDate,dummyDiagnosis, dummyTreatment);
         }
+        waitingRoom.addPatient(testPatient,1);
 
         int userChoice;
 
@@ -67,6 +68,7 @@ public class Menu {
                     break;
                 case 7:
                     handleDisplayOldestPatientRecord();
+                    break;
                 case 9:
                     System.out.println("\nExiting the program...");
                     System.out.println("Good bye");
@@ -133,12 +135,12 @@ public class Menu {
             System.out.println("****************************");
             System.out.println("*** Serving Next patient ***");
             System.out.println("****************************");
-            Patient nextPatient = waitingRoom.serveNextPatientInLine();
-            if(nextPatient == null){
+            currentPatient = waitingRoom.serveNextPatientInLine();
+            if(currentPatient == null){
                 System.out.println("Waiting room is empty.");
                 return;
             }
-            System.out.println(nextPatient);
+            System.out.println(currentPatient);
             System.out.println("Would you like to add a record for this patient? (Y/N): ");
             String newRecord = userInput.nextLine();
             if(newRecord.equalsIgnoreCase("y")){
@@ -155,7 +157,13 @@ public class Menu {
         System.out.println("***********************");
         System.out.println("*** Patient History ***");
         System.out.println("***********************");
-        historySystem.displayNewestPatientRecord();
+        if(currentPatient == null){
+            System.out.println();
+            System.out.println("No record(s) to display");
+            return;
+        }
+        currentPatient.getPatientRecordFolder().displayNewestPatientRecord();
+
         do {
             System.out.println();
             System.out.println("[P]revious Record | [N]ext Record | [Q]uit to Main Menu");
@@ -168,10 +176,10 @@ public class Menu {
             navChoice = userInput.nextLine();
             switch (navChoice.toUpperCase()) {
                 case "P":
-                    historySystem.moveToPreviousPatientRecord();
+                    currentPatient.getPatientRecordFolder().moveToPreviousPatientRecord();
                     break;
                 case "N":
-                    historySystem.moveToNextPatientRecord();
+                   currentPatient.getPatientRecordFolder().moveToNextPatientRecord();
                     break;
                 case "Q":
                     System.out.println("\nExiting to main menu...");
@@ -206,11 +214,10 @@ public class Menu {
             System.out.println("Enter patient treatment: ");
             String treatment = userInput.nextLine();
 
-            historySystem.insertPatientRecord(visitDate, diagnosis, treatment);
-            System.out.println("\nPatient's new record saved");
+            currentPatient.getPatientRecordFolder().insertPatientRecord(visitDate, diagnosis, treatment);
+            System.out.println("\nPatient record saved");
 
-            System.out.println("\n");
-            System.out.println("Would you like to exit record menu? (Y/N): ");
+            System.out.println("\nWould you like to exit record menu? (Y/N): ");
             exitChoice = userInput.nextLine();
         } while(exitChoice.equalsIgnoreCase("n"));
     }
@@ -221,7 +228,7 @@ public class Menu {
             System.out.println("*****************************");
             System.out.println("*** Oldest Patient Record ***");
             System.out.println("*****************************\n");
-            historySystem.displayOldestPatientRecord();
+            currentPatient.getPatientRecordFolder().displayOldestPatientRecord();
 
             System.out.println("\nWould you like to exit record menu? (Y/N): ");
             exitChoice = userInput.nextLine();
@@ -234,7 +241,7 @@ public class Menu {
             System.out.println("*****************************");
             System.out.println("*** Newest Patient Record ***");
             System.out.println("*****************************\n");
-            historySystem.displayNewestPatientRecord();
+            currentPatient.getPatientRecordFolder().displayNewestPatientRecord();
 
             System.out.println("\nWould you like to exit record menu? (Y/N): ");
             exitChoice = userInput.nextLine();
